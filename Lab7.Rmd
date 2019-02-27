@@ -1,0 +1,21 @@
+---
+title: "LA_7"
+author: "Adam Hayes, Richard Park, Jasmine Sanchez, Erin Omyer"
+date: "2/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+install.packages('data.table')
+library(data.table)
+data <- fread('household_power_consumption.txt',
+              
+              na.strings = c("NA", "", "?"))
+str(data)
+```
+
