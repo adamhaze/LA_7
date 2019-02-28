@@ -6,16 +6,55 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r}
+knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
-install.packages('data.table')
+install.packages('data.table', repos = 'household_power_consumption.txt')
 library(data.table)
 data <- fread('household_power_consumption.txt',
               
               na.strings = c("NA", "", "?"))
-str(data)
 ```
+
+
+
+###Adam's Findings
+
+####How does the time of day affect the energy output of an electric water heater and air conditioner?
+This is intriguing because many people may not be aware of when(during the day) their water heater and air conditioner are consuming the most energy.  It's easy to know at what times of the year you will consume the most energy with these household items, but knowing which times of the day they consume the most, regardless of time of year, can help people reduce their use much more efficiently in the longrun.
+
+```{r}
+water_and_air <- data %>%
+  filter(Sub_metering_3 > 0)%>%
+  count()
+time_of_day <- data%>%
+  filter(Sub_metering_3 > 0, Time < 12:00:00)%>%
+  count()
+```
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(time_of_day / water_and_air, caption = "Prob that time of day is AM, given that water heater/air conditioner have at least 1 watt-hour of active energy")
+
+```
+
+
+```{r}
+
+water_and_airGRAPH1 <- data%>%
+  filter(Sub_metering_3 >= 10)
+
+ggplot(data = water_and_airGRAPH1)+
+  geom_bar(mapping = aes(x = Time))+
+  labs(title = "At Least 10 Watt-Hour Active Energy")
+  
+water_and_airGRAPH2 <- data%>%
+  filter(Sub_metering_3 >= 20)
+
+ggplot(data = water_and_airGRAPH2)+
+  geom_bar(mapping = aes(x = Time))+
+  labs(title = "At Least 20 Watt-Hours Active Energy")
+  
+```
+
+####How I came about this:
+Doing some exploratory data analysis on the time of day, and what values were higher between the sub_metering variables(1,2,and 3) I found that sub_metering_3 had the most values above 0.  Using the count function I compared the 3.  I also filtered all 3 values from highest watt-hour to lowest, and found even though sub_metering_2(laundry room) had some very high values, they were much less consistent than sub_metering_3(water heater/air conditioner).  Then I began filtering out the 0 values for sub_metering_3, and also filtering the times of day.  I explored the number of sub_metering_values of at least 1, that occurred in the morning(before 12:00:00) compared to the evening(after 12:00:00), and found that a much higher number of water heaters/air conditioners with positive watt-hour active energy occurred in the morning.
 
