@@ -11,8 +11,7 @@ library(tidyverse)
 install.packages('data.table', repos = 'household_power_consumption.txt')
 library(data.table)
 data <- fread('household_power_consumption.txt',
-              
-              na.strings = c("NA", "", "?"))
+               na.strings = c("NA", "", "?"))
 ```
 
 
@@ -57,4 +56,45 @@ ggplot(data = water_and_airGRAPH2)+
 
 ####How I came about this:
 Doing some exploratory data analysis on the time of day, and what values were higher between the sub_metering variables(1,2,and 3) I found that sub_metering_3 had the most values above 0.  Using the count function I compared the 3.  I also filtered all 3 values from highest watt-hour to lowest, and found even though sub_metering_2(laundry room) had some very high values, they were much less consistent than sub_metering_3(water heater/air conditioner).  Then I began filtering out the 0 values for sub_metering_3, and also filtering the times of day.  I explored the number of sub_metering_values of at least 1, that occurred in the morning(before 12:00:00) compared to the evening(after 12:00:00), and found that a much higher number of water heaters/air conditioners with positive watt-hour active energy occurred in the morning.
+
+###Richard's Findings 
+
+###How does time affect the global reactive power
+This probability was surprising/intriguing because a lot of people might not realize that they consume the greatest amount of power in the mornings. It was expected that power would surge in the afternoon because people get off work and come home to engage in leisure activities (such as television) which would require more power, however, that is not the case because there's a higher probability for someone to use more power in the morning. This information can be used to help people efficiently consume power.
+
+```{r}
+Global_reactive_power <- data %>%
+  filter(Global_reactive_power > 0, Time < 12:00:00)%>%
+  count()
+Greater_global_reactive_power <- data%>%
+  filter(Global_reactive_power > 0, Time >= 12:00:00)%>%
+  count()
+```
+
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(Greater_global_reactive_power / Global_reactive_power , caption = "Prob that Global Reactive Power is above 0, given that the time is noon or later")
+```
+
+```{r}
+
+Global_reactive_powerGRAPH1 <- data%>%
+  filter(Global_reactive_power == 0)
+
+ggplot(data = Global_reactive_powerGRAPH1)+
+  geom_bar(mapping = aes(x = Time))+
+  labs(title = "0 Watt-Hour reactive power globally")
+  
+Global_reactive_powerGRAPH2 <- data%>%
+  filter(Global_reactive_power > 0)
+
+ggplot(data = Global_reactive_powerGRAPH2)+
+  geom_bar(mapping = aes(x = Time))+
+  labs(title = "Greater than 0 Watt-Hours reactive power globally")
+  
+```
+
+###How I came to this finding:
+Doing some exploratory data analysis with regards to the time of day, and determining which values were higher in the Global Reactive Power, I found that there were a decent amount of values above 0. Therefore, I utilized the count function to compared the values. I accomplished this by filtering the values which were higher than 0 based on time. I decided that the right cut off time would be noon or 12:00:00 because that's the transition period from the morning into the afternoon so I filtered the values above 0 watts per hour based on the time cut off. I ended up discovering that there is a greater percentage of global reactive power being consumed in the morning versus the afternoon.
+
 
