@@ -131,7 +131,7 @@ ggplot(data = AmountofLaundry_GRAPH2) +
 ```
 
 ####How I came to this finding:
-Doing some analysis with the amount of active energy used for laundry, I would assume that as the date increases then more laundry energy would be used. From the graphs, as the years in the study increase, the amount of energy output from laundry outputs gradually increases. As well, the amount of people that use no energy in their laundry rooms has gone down over time roughly. 
+Doing some analysis with the amount of active energy used for laundry, I would assume that as the date increases then more laundry energy would be used. From the graphs, as the years in the study increase, the amount of energy output from laundry outputs gradually increases. As well, the amount of people that use no energy in their laundry rooms has gone down over time roughly. I believe the slow decline in energy output for laundry rooms relates to the increase in the efficiency of appliances in present day technology. I explored the data for the various years provided and realized that there was a change around half way through the data collection.
 
 
 
