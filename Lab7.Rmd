@@ -59,7 +59,7 @@ Doing some exploratory data analysis on the time of day, and what values were hi
 
 ###Richard's Findings 
 
-###How does time affect the global reactive power
+####How does time affect the global reactive power
 This probability was surprising/intriguing because a lot of people might not realize that they consume the greatest amount of power in the mornings. It was expected that power would surge in the afternoon because people get off work and come home to engage in leisure activities (such as television) which would require more power, however, that is not the case because there's a higher probability for someone to use more power in the morning. This information can be used to help people efficiently consume power.
 
 ```{r}
@@ -94,7 +94,7 @@ ggplot(data = Global_reactive_powerGRAPH2)+
   
 ```
 
-###How I came to this finding:
+####How I came to this finding:
 Doing some exploratory data analysis with regards to the time of day, and determining which values were higher in the Global Reactive Power, I found that there were a decent amount of values above 0. Therefore, I utilized the count function to compared the values. I accomplished this by filtering the values which were higher than 0 based on time. I decided that the right cut off time would be noon or 12:00:00 because that's the transition period from the morning into the afternoon so I filtered the values above 0 watts per hour based on the time cut off. I ended up discovering that there is a greater percentage of global reactive power being consumed in the morning versus the afternoon.
 
 ###Erin's Findings
@@ -130,7 +130,7 @@ ggplot(data = AmountofLaundry_GRAPH2) +
   
 ```
 
-###How I came to this finding:
+####How I came to this finding:
 Doing some analysis with the amount of active energy used for laundry, I would assume that as the date increases then more laundry energy would be used. From the graphs, as the years in the study increase, the amount of energy output from laundry outputs gradually increases. As well, the amount of people that use no energy in their laundry rooms has gone down over time roughly. 
 
 
@@ -165,3 +165,7 @@ ggplot(data = data)+
 
 ####How I came about this finding: 
 After some analyzing with the amount of active energy used in households with kitchen appliances, I hypothesize that as the time of day gets later, then more active kitchen energy would be utilized and outputted by the household. From the graphs, again, as the time of day gets later, the amount of energy output from kitch appliances arguably increases drastically. Also, there is a higher amount of people who are using these appliances in later parts of the day as described above due to households being more mobile and productive during morning hours that these are not used as often during these hours, which increases the amount of reactive power being used. 
+
+
+###Our Dataset
+One aspect of our dataset was the sub_metering_1 & 2 & 3 variables which represented kitchen, laundry room, and electric water heater and air conditioner respectively.  The variables represented the watt-hour active energy for each of these locations at specific times and dates.  Comparing each of these variables with different times during the day allowed us to see which locations produced the most energy at specific times of day.  It seemed to us that throughout the day, the electric water heater and air conditioner typically produced the most active energy.  To deal with missing values for these variables we were able to filter out all values less than or equal to 0 which gave us only the values when these locations were producing active energy.
