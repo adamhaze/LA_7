@@ -73,7 +73,7 @@ Greater_global_reactive_power <- data%>%
 
 ```{r echo = FALSE, results = 'asis'}
 library(knitr)
-kable(Greater_global_reactive_power / Global_reactive_power , caption = "Prob that Global Reactive Power is above 0, given that the time is noon or later")
+kable(Greater_global_reactive_power / Global_reactive_power , caption = "Prob that Global Reactive Power is above 0 kilowatts, given that the time is noon or later")
 ```
 
 ```{r}
@@ -83,14 +83,14 @@ Global_reactive_powerGRAPH1 <- data%>%
 
 ggplot(data = Global_reactive_powerGRAPH1)+
   geom_bar(mapping = aes(x = Time))+
-  labs(title = "0 Watt-Hour reactive power globally")
+  labs(title = "0 Kilowatt reactive power globally")
   
 Global_reactive_powerGRAPH2 <- data%>%
   filter(Global_reactive_power > 0)
 
 ggplot(data = Global_reactive_powerGRAPH2)+
   geom_bar(mapping = aes(x = Time))+
-  labs(title = "Greater than 0 Watt-Hours reactive power globally")
+  labs(title = "Greater than 0 Kilowatt reactive power globally")
   
 ```
 
@@ -168,4 +168,5 @@ After some analyzing with the amount of active energy used in households with ki
 
 
 ###Our Dataset
-One aspect of our dataset was the sub_metering_1 & 2 & 3 variables which represented kitchen, laundry room, and electric water heater and air conditioner respectively.  The variables represented the watt-hour active energy for each of these locations at specific times and dates.  Comparing each of these variables with different times during the day allowed us to see which locations produced the most energy at specific times of day.  It seemed to us that throughout the day, the electric water heater and air conditioner typically produced the most active energy.  To deal with missing values for these variables we were able to filter out all values less than or equal to 0 which gave us only the values when these locations were producing active energy.
+One aspect of our dataset was the sub_metering_1 & 2 & 3 variables which represented kitchen, laundry room, and electric water heater and air conditioner respectively.  The variables represented the watt-hour active energy for each of these locations at specific times and dates.  Comparing each of these variables with different times during the day allowed us to see which locations produced the most energy at specific times of day.  It seemed to us that throughout the day, the electric water heater and air conditioner typically produced the most active energy.  To deal with missing values for these variables we were able to filter out all values less than or equal to 0 which gave us only the values when these locations were producing active energy. Furthermore, our data set included the global reactive power which was measured in kilowatts. We were able to compare this variable with different times of the day to see when people consume the most energy.
+
