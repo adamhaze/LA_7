@@ -97,4 +97,40 @@ ggplot(data = Global_reactive_powerGRAPH2)+
 ###How I came to this finding:
 Doing some exploratory data analysis with regards to the time of day, and determining which values were higher in the Global Reactive Power, I found that there were a decent amount of values above 0. Therefore, I utilized the count function to compared the values. I accomplished this by filtering the values which were higher than 0 based on time. I decided that the right cut off time would be noon or 12:00:00 because that's the transition period from the morning into the afternoon so I filtered the values above 0 watts per hour based on the time cut off. I ended up discovering that there is a greater percentage of global reactive power being consumed in the morning versus the afternoon.
 
+###Erin's Findings
+
+####How does the increase in the years impact the energy output for the laundry room?
+This is intriguing to analyze because you would think that as technology gets better that more people would be having more energy output. In specific, you would think more people would be using energy in their laundry rooms. But, as well, technology for laundry machines have become more energy efficient, and the data shows this. 
+```{r}
+AmountofLaundry_energy <- data %>%
+  filter(Sub_metering_2 >= 0) %>%
+  count()
+years_Laundry <- data %>% 
+  filter(Sub_metering_2 > 0, Date >= 07/01/2008) %>% 
+  count()
+
+```
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(years_Laundry / AmountofLaundry_energy, caption = "Probability of amoung of energy output for laundry from beyond 2008")
+
+```
+```{r}
+AmountofLaundry_GRAPH1 <- data %>%
+  filter(Sub_metering_2 == 0) 
+ggplot(data = AmountofLaundry_GRAPH1) +
+  geom_bar(mapping = aes(x = Date)) +
+  labs(title = "0 Watts-Hour Active Energy")
+
+AmountofLaundry_GRAPH2 <-data %>%
+  filter(Sub_metering_2 > 0)
+ggplot(data = AmountofLaundry_GRAPH2) +
+  geom_bar(mapping = aes(x = Date)) + 
+  labs(title = "Greater than 0 Watt-Hours Active Energy")
+  
+```
+
+###How I came to this finding:
+Doing some analysis with the amount of active energy used for laundry, I would assume that as the date increases then more laundry energy would be used. From the graphs, as the years in the study increase, the amount of energy output from laundry outputs gradually increases. As well, the amount of people that use no energy in their laundry rooms has gone down over time roughly. 
+
 
