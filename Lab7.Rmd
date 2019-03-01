@@ -134,3 +134,34 @@ ggplot(data = AmountofLaundry_GRAPH2) +
 Doing some analysis with the amount of active energy used for laundry, I would assume that as the date increases then more laundry energy would be used. From the graphs, as the years in the study increase, the amount of energy output from laundry outputs gradually increases. As well, the amount of people that use no energy in their laundry rooms has gone down over time roughly. 
 
 
+
+###Jasmine's Findings 
+
+####How does kitchen appliance energy fluctate over time and how does that usage relate to the global active vs reactive power supply?
+I took some time to analyze how much of the energy usage of kitchen appliances were using active power vs reactive power. Global active power represents the amount of power actually being utilized to power the appliances like microwaves, dishwashers and other non- gas powered equipment from the Sub_metering_1 values.Reactive power, however, represents useless power and I found that there is a stronger density in the later hours of the day where the Global active power greater than 500 watts is higher than reactive power. This makes sense, as households are typically so much more mobile and in a hurry during the earlier hours of the day becuase they have places to be. In the later hours of the day, households are able to settle down, and they utilize these spaces more in the evening times because it more conevenient and less time sensative. 
+
+```{r}
+Kitchen_active <- data%>%
+  filter(Sub_metering_1 > 0, Global_active_power > 0.5)%>%
+  count()
+times_of_day <- data%>%
+  filter(Sub_metering_1 > 0, Time < 12:00:00)%>%
+  count() 
+
+
+```
+
+```{r echo = FALSE, results = 'asis'}
+library(knitr)
+kable(Kitchen_active / times_of_day, caption = "Prob that time of day is toward end of day, with the active kitchen power being greater than 500 watts")
+```
+
+```{r}
+ggplot(data = data)+
+  geom_point(mapping = aes(x = Time, y = Sub_metering_1 , color = Global_active_power), position = "jitter", na.rm = TRUE)+
+  labs(title = "Active Kitchen Energy Count")
+```
+
+
+####How I came about this finding: 
+After some analyzing with the amount of active energy used in households with kitchen appliances, I hypothesize that as the time of day gets later, then more active kitchen energy would be utilized and outputted by the household. From the graphs, again, as the time of day gets later, the amount of energy output from kitch appliances arguably increases drastically. Also, there is a higher amount of people who are using these appliances in later parts of the day as described above due to households being more mobile and productive during morning hours that these are not used as often during these hours, which increases the amount of reactive power being used. 
